@@ -1,20 +1,55 @@
 body {
-    margin:0;
-    padding:0;
- }
+  margin: 0;
+  padding: 0;
+}
 
-.no-input-alert{
-    margin-top: 10px;
+.no-input-alert {
+  margin-top: 10px;
 }
 
 .register-div {
+  width: 30%;
+  height: 50%;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-width: 1px;
+  border-radius: 10px;
+  border-color: rgb(209, 209, 209);
+  border-style: solid;
+  padding: 10px;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .register-div {
+    width: 65%;
+    height: 70%;
+
     position: absolute;
-    bottom: 80px;
-    right: 80px;
-    width: 25%;
-    padding: 10px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
     border-width: 1px;
     border-radius: 10px;
     border-color: rgb(209, 209, 209);
     border-style: solid;
+    padding: 10px;
+    overflow: auto;
+  }
+}
+
+.card-info-div {
+  display: flex;
+  margin-top: 5px;
+}
+
+.card-code-input{
+    margin-left: 10px;
 }

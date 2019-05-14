@@ -13,10 +13,10 @@ export default class RegisterForm extends React.Component {
 
     this.validateForm = this.validateForm.bind(this);
   }
+
   validateForm() {
-    console.log(this.state.invalidEmail);
-    let emailOnInput = "" + document.getElementById("InputEmail").value;
-    let passOnInput = "" + document.getElementById("InputPassword").value;
+    const emailOnInput = "" + document.getElementById("InputEmail").value;
+    const passOnInput = "" + document.getElementById("InputPassword").value;
     if (!emailOnInput.match(/[A-Za-z0-9]*@[A-Za-z0-9]*\.[A-Za-z]*/g)) {
       this.setState({
         invalidEmail: true
@@ -58,8 +58,7 @@ export default class RegisterForm extends React.Component {
               type="email"
               className="form-control"
               id="InputEmail"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
+              placeholder="name@example.com"
               onChange={this.onChangeEmail}
             />
           </div>
@@ -72,9 +71,42 @@ export default class RegisterForm extends React.Component {
               placeholder="Password"
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="InputStatus">Status</label>
+            <select className="form-control" id="Input Status">
+              <option>Listener</option>
+              <option>Author</option>
+              <option>Co-Chair</option>
+              <option>Chair</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Payment</label>
+            <input
+              className="form-control"
+              id="InputCard"
+              placeholder="xxxx-xxxx-xxxx-xxxx"
+              onChange={this.completeInput}
+              maxLength="19"
+            />
+            <div className="card-info-div">
+              <input
+                className="form-control"
+                id="InputCardDate"
+                placeholder="MM/YY"
+                maxLength="5"
+              />
+              <input
+                className="form-control card-code-input"
+                id="InputCardCode"
+                placeholder="xxx"
+                maxLength="3"
+              />
+            </div>
+          </div>
         </form>
         <button className="btn btn-primary" onClick={this.validateForm}>
-          Submit
+          Register
         </button>
         {this.state.noInput ? (
           <div className="alert alert-danger no-input-alert" role="alert">
