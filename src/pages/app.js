@@ -1,9 +1,19 @@
 import React from 'react';
-import Register from './register/register'
-import Home from './home/home'
+import {NavLink} from 'react-router-dom'
+import {routing} from '../routes/routes'
 function App() {
   return (
-      <Home/>
+    <div>
+      {routing}
+    <div>
+      <NavLink exact to="/home" activeClassName="active">
+        Home
+      </NavLink>
+      <NavLink to="/" activeClassName="active">
+        Register
+      </NavLink>
+    </div>
+  </div>
   );
 }
 
