@@ -1,9 +1,20 @@
 import React from 'react';
-import Register from './register/register'
-import Home from './home/Home.js'
+
+import {NavLink} from 'react-router-dom'
+import {routing} from '../routes/routes'
+import Navbar from '../components/navbar/navbar'
+
 function App() {
   return (
-      <Home/>
+     <div>
+
+        <div>
+          {routing}
+        <Navbar>
+
+        </Navbar>
+        </div>
+     </div>
   );
 }
 

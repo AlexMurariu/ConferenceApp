@@ -32,3 +32,13 @@ yarn-error.log*
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea
+build
+out
+generated
+MANIFEST.MF
