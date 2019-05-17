@@ -1,126 +1,109 @@
 import React from "react";
 import "./register.css";
+import axios from "axios";
 
 export default class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      noInput: false,
-      invalidEmail: false,
-      invalidPass: false
+      email: "",
+      password: ""
     };
-
-    this.validateForm = this.validateForm.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  validateForm() {
-    const emailOnInput = "" + document.getElementById("InputEmail").value;
-    const passOnInput = "" + document.getElementById("InputPassword").value;
-    if (!emailOnInput.match(/[A-Za-z0-9]*@[A-Za-z0-9]*\.[A-Za-z]*/g)) {
-      this.setState({
-        invalidEmail: true
-      });
-    } else {
-      this.setState({
-        invalidEmail: false
-      });
-    }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
 
-    if (passOnInput.length < 4) {
-      this.setState({
-        invalidPass: true
-      });
-    } else {
-      this.setState({
-        invalidPass: false
-      });
-    }
-
-    if (emailOnInput === "" || passOnInput === "") {
-      this.setState({
-        noInput: true
-      });
-    } else {
-      this.setState({
-        noInput: false
-      });
-    }
+  onSubmit(e) {
+    const { email, password } = this.state;
+    e.preventDefault();
+    axios.post(
+      `http://localhost:8080/register?email=${this.state.email}.com&password=${
+        this.state.password
+      }`
+    );
   }
 
   render() {
     return (
       <div className="register-div">
-        <form>
+        <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="InputEmail">Email address</label>
             <input
+              value={this.state.email}
+              onChange={this.onChange}
               type="email"
               className="form-control"
-              id="InputEmail"
+              name="email"
               placeholder="name@example.com"
-              onChange={this.onChangeEmail}
             />
           </div>
           <div className="form-group">
             <label htmlFor="InputPassword">Password</label>
             <input
+              value={this.state.password}
+              onChange={this.onChange}
               type="password"
               className="form-control"
-              id="InputPassword"
+              name="password"
               placeholder="Password"
             />
           </div>
           <div className="form-group">
             <label htmlFor="InputStatus">Status</label>
-            <select className="form-control" id="Input Status">
-              <option>Listener</option>
-              <option>Author</option>
-              <option>Co-Chair</option>
-              <option>Chair</option>
+            <select
+              value={this.state.status}
+              //onChange={this.onChange}
+              className="form-control"
+              name="status"
+            >
+              <option value="" disabled>
+                Choose your status
+              </option>
+              <option value="listener">Listener</option>
+              <option value="author">Author</option>
+              <option value="co-chair">Co-Chair</option>
+              <option value="chair">Chair</option>
             </select>
           </div>
           <div className="form-group">
             <label>Payment</label>
             <input
+              value={this.state.cardNumber}
+              //onChange={this.onChange}
               className="form-control"
-              id="InputCard"
+              name="cardNumber"
               placeholder="xxxx-xxxx-xxxx-xxxx"
-              onChange={this.completeInput}
               maxLength="19"
             />
             <div className="card-info-div">
               <input
+                value={this.state.expirationDate}
+                //onChange={this.onChange}
                 className="form-control"
-                id="InputCardDate"
+                name="expirationDate"
                 placeholder="MM/YY"
                 maxLength="5"
               />
               <input
+                value={this.state.cvv}
+                //onChange={this.onChange}
                 className="form-control card-code-input"
-                id="InputCardCode"
+                name="cvv"
                 placeholder="xxx"
                 maxLength="3"
               />
             </div>
           </div>
+          <button className="btn btn-primary">Register</button>
         </form>
-        <button className="btn btn-primary" onClick={this.validateForm}>
-          Register
-        </button>
-        {this.state.noInput ? (
-          <div className="alert alert-danger no-input-alert" role="alert">
-            No email or password inserted!
-          </div>
-        ) : this.state.invalidEmail ? (
-          <div className="alert alert-danger no-input-alert" role="alert">
-            Invalid email!
-          </div>
-        ) : this.state.invalidPass ? (
-          <div className="alert alert-danger no-input-alert" role="alert">
-            Password too short!
-          </div>
-        ) : null}
       </div>
     );
   }

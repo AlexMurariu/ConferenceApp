@@ -1,21 +1,24 @@
-import React from 'react';
+import React from "react";
+import { routing } from "../routes/routes";
+import Navbar from "../components/navbar/navbar";
 
-import {NavLink} from 'react-router-dom'
-import {routing} from '../routes/routes'
-import Navbar from '../components/navbar/navbar'
-
-function App() {
-  return (
-     <div>
-
+class App extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      userLoggedIn: false
+    }
+  }
+  render() {
+    return (
+      <div>
         <div>
           {routing}
-        <Navbar>
-
-        </Navbar>
+          <Navbar />
         </div>
-     </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
