@@ -1,5 +1,5 @@
 import React from "react";
-import getLogedInUser from "../../services/getLogedInUser";
+import axios from "axios";
 import { Redirect } from "react-router-dom";
 
 export default class LogInForm extends React.Component {
@@ -7,8 +7,9 @@ export default class LogInForm extends React.Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: ""
+      email: this.props.email,
+      password: this.props.password,
+      status: this.props.status
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -22,10 +23,17 @@ export default class LogInForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    axios
+      .get("http://localhost:8080/users/login?email=misu@mail.com")
+      .then(res => this.setState({
+        user: res.data.user_status
+      }));
   }
 
   render() {
+    if (this.props.status) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="register-div">
         <form onSubmit={this.onSubmit}>
@@ -51,7 +59,17 @@ export default class LogInForm extends React.Component {
               placeholder="Password"
             />
           </div>
-          <button className="btn btn-primary" onClick={this.validateForm}>
+          <button
+            button="submit"
+            className="btn btn-primary"
+            onClick={() =>
+              this.props.onChange(
+                this.state.email,
+                this.state.password,
+                this.state.status
+              )
+            }
+          >
             Log in
           </button>
         </form>

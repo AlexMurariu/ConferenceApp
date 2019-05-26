@@ -1,14 +1,16 @@
 import React from "react";
 import "./register.css";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 export default class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      password: ""
+      email: this.props.email,
+      password: this.props.password,
+      status: this.props.status
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -20,17 +22,59 @@ export default class RegisterForm extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    console.log("Bye");
+    axios.post("http://localhost:8080/register", {
+      email: this.state.email,
+      password: this.state.password,
+      user_status: this.state.status
+    })
+  }
+
   onSubmit(e) {
-    const { email, password } = this.state;
     e.preventDefault();
-    axios.post(
-      `http://localhost:8080/register?email=${this.state.email}.com&password=${
-        this.state.password
-      }`
+    console.log("WORK BITCH!!");
+    // let userData = {
+    //   username: this.state.newUser.username,
+    //   email: this.state.newUser.email,
+    //   password: this.state.newUser.password
+    // };
+    // let url = `http://localhost:8080/register`;
+    // axios
+    //   .post(url, userData, {
+    //     headers: {
+    //       accept: "text/plain",
+    //       "Content-Type": "application/json-patch+json"
+    //     }
+    //   })
+    //   .then(response => {
+    //     this.setState({
+    //       registered: true
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log("[Error] register could not complete: " + err);
+    //     if (err.message === "Request failed with status code 400") {
+    //       window.alert("Username or email in use");
+    //     }
+    //   });
+  }
+
+  renderButton(email, pass, status) {
+    return (
+      <button
+        className="btn btn-primary"
+        onClick={() => this.props.onChange(email, pass, status)}
+      >
+        Register
+      </button>
     );
   }
 
   render() {
+    if (this.props.email) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="register-div">
         <form onSubmit={this.onSubmit}>
@@ -60,17 +104,17 @@ export default class RegisterForm extends React.Component {
             <label htmlFor="InputStatus">Status</label>
             <select
               value={this.state.status}
-              //onChange={this.onChange}
+              onChange={this.onChange}
               className="form-control"
               name="status"
             >
               <option value="" disabled>
                 Choose your status
               </option>
-              <option value="listener">Listener</option>
-              <option value="author">Author</option>
-              <option value="co-chair">Co-Chair</option>
-              <option value="chair">Chair</option>
+              <option value="LISTENER">Listener</option>
+              <option value="AUTHOR">Author</option>
+              <option value="CO-CHAIR">Co-Chair</option>
+              <option value="CHAIR">Chair</option>
             </select>
           </div>
           <div className="form-group">
@@ -102,7 +146,11 @@ export default class RegisterForm extends React.Component {
               />
             </div>
           </div>
-          <button className="btn btn-primary">Register</button>
+          {this.renderButton(
+            this.state.email,
+            this.state.password,
+            this.state.status
+          )}
         </form>
       </div>
     );
