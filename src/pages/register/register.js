@@ -24,22 +24,19 @@ export default class RegisterForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-     axios.post("http://localhost:8080/register", {
-       email: this.state.email,
-       password: this.state.password,
-       user_status: this.state.status
-    }).then(() => this.props.onChange(this.state.email, this.state.password, this.state.status))
-  }
-
-  renderButton(email, pass, status) {
-    return (
-      <button
-        type="submit"
-        className="btn btn-primary"
-      >
-        Register
-      </button>
-    );
+    axios
+      .post("http://localhost:8080/register", {
+        email: this.state.email,
+        password: this.state.password,
+        user_status: this.state.status
+      })
+      .then(() =>
+        this.props.onChange(
+          this.state.email,
+          this.state.password,
+          this.state.status
+        )
+      );
   }
 
   render() {
@@ -117,11 +114,9 @@ export default class RegisterForm extends React.Component {
               />
             </div>
           </div>
-          {this.renderButton(
-            this.state.email,
-            this.state.password,
-            this.state.status
-          )}
+          <button type="submit" className="btn btn-primary">
+            Register
+          </button>
         </form>
       </div>
     );

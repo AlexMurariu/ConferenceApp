@@ -24,26 +24,20 @@ export default class LogInForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const url = `http://localhost:8080/users/login?email=${this.state.email}`;
-    axios.get(url).then(
-      res =>
-        this.props.onChange(res.data.email, res.data.password, res.data.user_status)
-    );
-  }
-
-  renderButton(email, pass, status) {
-    return (
-      <button
-        type="submit"
-        className="btn btn-primary"
-      >
-        Log in
-      </button>
-    );
+    axios
+      .get(url)
+      .then(res =>
+        this.props.onChange(
+          res.data.email,
+          res.data.password,
+          res.data.user_status
+        )
+      );
   }
 
   render() {
     if (this.props.status) {
-       return <Redirect to="/" />;
+      return <Redirect to="/" />;
     }
     return (
       <div className="register-div">
@@ -70,11 +64,9 @@ export default class LogInForm extends React.Component {
               placeholder="Password"
             />
           </div>
-          {this.renderButton(
-            this.state.email,
-            this.state.password,
-            this.state.status
-          )}
+          <button type="submit" className="btn btn-primary">
+            Log in
+          </button>
         </form>
       </div>
     );
