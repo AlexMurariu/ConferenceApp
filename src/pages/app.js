@@ -64,7 +64,11 @@ class App extends React.Component {
             />
             <Route path="/home" component={Home} />
           </Switch>
-          <Navbar />
+          <Navbar
+            email={this.state.email}
+            password={this.state.password}
+            status={this.state.status}
+          />
         </div>
       </div>
     );

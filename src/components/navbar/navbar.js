@@ -1,39 +1,66 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class Navbar extends React.Component {
-    render() {
-        return (
-
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <NavLink className="navbar-brand" exact to="/home">ConfyGo</NavLink>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <NavLink className="nav-link" exact to="/home" activeClassName="active">
-                            Home
-                        </NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink className="nav-link" to="/register" activeClassName="active">
-                            Register
-                        </NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink className="nav-link" to="/login" activeClassName="active">
-                            Log In
-                        </NavLink>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        )
-    }
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <NavLink className="navbar-brand" exact to="/home">
+          ConfyGo
+        </NavLink>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                exact
+                to="/home"
+                activeClassName="active"
+              >
+                Home
+              </NavLink>
+            </li>
+            {!this.props.status ? (
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/register"
+                  activeClassName="active"
+                >
+                  Register
+                </NavLink>
+              </li>
+            ) : null}
+            {!this.props.status ? (
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/login"
+                  activeClassName="active"
+                >
+                  Log In
+                </NavLink>
+              </li>
+            ) : null}
+          </ul>
+        </div>
+      </nav>
+    );
+  }
 }
 
 export default Navbar;

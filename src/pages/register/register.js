@@ -22,49 +22,20 @@ export default class RegisterForm extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    console.log("Bye");
-    axios.post("http://localhost:8080/register", {
-      email: this.state.email,
-      password: this.state.password,
-      user_status: this.state.status
-    })
-  }
-
   onSubmit(e) {
     e.preventDefault();
-    console.log("WORK BITCH!!");
-    // let userData = {
-    //   username: this.state.newUser.username,
-    //   email: this.state.newUser.email,
-    //   password: this.state.newUser.password
-    // };
-    // let url = `http://localhost:8080/register`;
-    // axios
-    //   .post(url, userData, {
-    //     headers: {
-    //       accept: "text/plain",
-    //       "Content-Type": "application/json-patch+json"
-    //     }
-    //   })
-    //   .then(response => {
-    //     this.setState({
-    //       registered: true
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log("[Error] register could not complete: " + err);
-    //     if (err.message === "Request failed with status code 400") {
-    //       window.alert("Username or email in use");
-    //     }
-    //   });
+     axios.post("http://localhost:8080/register", {
+       email: this.state.email,
+       password: this.state.password,
+       user_status: this.state.status
+    }).then(() => this.props.onChange(this.state.email, this.state.password, this.state.status))
   }
 
   renderButton(email, pass, status) {
     return (
       <button
+        type="submit"
         className="btn btn-primary"
-        onClick={() => this.props.onChange(email, pass, status)}
       >
         Register
       </button>
@@ -72,7 +43,7 @@ export default class RegisterForm extends React.Component {
   }
 
   render() {
-    if (this.props.email) {
+    if (this.props.status) {
       return <Redirect to="/" />;
     }
     return (
