@@ -4,6 +4,10 @@ import LogInForm from "../pages/login/login";
 import Home from "../pages/home/Home";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "../components/navbar/navbar";
+import UploadAbstractBtn from "../components/buttons/uploadAbstract/uploadAbstract";
+import ReviewBtn from "../components/buttons/reviewBtn/reviewBtn";
+import BidBtn from "../components/buttons/bidBtn/bidBtn";
+import AssignRoomBtn from "../components/buttons/assignRoomBtn/assignRoomBtn";
 
 class App extends React.Component {
   constructor(props) {
@@ -67,7 +71,37 @@ class App extends React.Component {
                 />
               )}
             />
-            <Route path="/home" component={Home} />
+            <Route
+                exact
+                path="/home"
+
+                onChange={(email, pass, status) =>
+                    this.changeState("caca@caca.com", "caca", "Author")
+                }
+
+                {...this.props.status === "Author" &&
+                    <div>
+                        <UploadAbstractBtn/>
+                        component={Home}
+                    </div>
+                }
+
+                {...this.props.status === "Chair" &&
+                    <div>
+                        <ReviewBtn/>
+                        <BidBtn/>
+                        <AssignRoomBtn/>
+                        component={Home}
+                    </div>
+                }
+
+                {...this.props.status === "Listener" &&
+                    <div>
+                        component={Home}
+                    </div>
+                }
+                component={Home}
+            />
           </Switch>
         </div>
       </div>

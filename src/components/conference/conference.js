@@ -13,6 +13,7 @@ class Conference extends React.Component {
                         <li className="list-group-item">Itinerary item 2</li>
                         <li className="list-group-item">Itinerary item 3</li>
                     </ul>
+                    <a href="#" className="btn btn-primary">Do stuff</a>
                 </div>
             </div>
         );

@@ -1,3 +1,7 @@
 .myClass {
-    margin: 50px;
+    margin: 50px 300px;
+}
+
+.btn {
+    margin-top: 20px;
 }
