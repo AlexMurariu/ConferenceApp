@@ -22,57 +22,25 @@ export default class RegisterForm extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    console.log("Bye");
-    axios.post("http://localhost:8080/register", {
-      email: this.state.email,
-      password: this.state.password,
-      user_status: this.state.status
-    })
-  }
-
   onSubmit(e) {
     e.preventDefault();
-    console.log("WORK BITCH!!");
-    // let userData = {
-    //   username: this.state.newUser.username,
-    //   email: this.state.newUser.email,
-    //   password: this.state.newUser.password
-    // };
-    // let url = `http://localhost:8080/register`;
-    // axios
-    //   .post(url, userData, {
-    //     headers: {
-    //       accept: "text/plain",
-    //       "Content-Type": "application/json-patch+json"
-    //     }
-    //   })
-    //   .then(response => {
-    //     this.setState({
-    //       registered: true
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log("[Error] register could not complete: " + err);
-    //     if (err.message === "Request failed with status code 400") {
-    //       window.alert("Username or email in use");
-    //     }
-    //   });
-  }
-
-  renderButton(email, pass, status) {
-    return (
-      <button
-        className="btn btn-primary"
-        onClick={() => this.props.onChange(email, pass, status)}
-      >
-        Register
-      </button>
-    );
+    axios
+      .post("http://localhost:8080/register", {
+        email: this.state.email,
+        password: this.state.password,
+        user_status: this.state.status
+      })
+      .then(() =>
+        this.props.onChange(
+          this.state.email,
+          this.state.password,
+          this.state.status
+        )
+      );
   }
 
   render() {
-    if (this.props.email) {
+    if (this.props.status) {
       return <Redirect to="/" />;
     }
     return (
@@ -146,11 +114,9 @@ export default class RegisterForm extends React.Component {
               />
             </div>
           </div>
-          {this.renderButton(
-            this.state.email,
-            this.state.password,
-            this.state.status
-          )}
+          <button type="submit" className="btn btn-primary">
+            Register
+          </button>
         </form>
       </div>
     );
