@@ -57,6 +57,11 @@ class Navbar extends React.Component {
                 </NavLink>
               </li>
             ) : null}
+            {this.props.status ? <li className="nav-item user-box">
+              <div className="nav-link" onClick={() => this.props.logout("", "", "")}>
+                Log Out
+              </div>
+            </li> : null}
           </ul>
         </div>
       </nav>

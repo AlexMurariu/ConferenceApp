@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import "./login.css"
 
 export default class LogInForm extends React.Component {
   constructor(props) {
@@ -9,10 +10,18 @@ export default class LogInForm extends React.Component {
     this.state = {
       email: this.props.email,
       password: this.props.password,
-      status: this.props.status
+      status: this.props.status,
+      isClicked: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handelClick = this.handelClick.bind(this);
+  }
+
+  handelClick() {
+    this.setState({
+      isClicked: !this.state.isClicked
+    });
   }
 
   onChange(e) {
@@ -37,10 +46,10 @@ export default class LogInForm extends React.Component {
 
   render() {
     if (this.props.status) {
-      return <Redirect to="/" />;
+      return <Redirect to="/home" />;
     }
     return (
-      <div className="register-div">
+      <div className="login-div">
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="InputEmail">Email address</label>
@@ -67,6 +76,10 @@ export default class LogInForm extends React.Component {
           <button type="submit" className="btn btn-primary">
             Log in
           </button>
+          <a href="#" className="acc" onClick={this.handelClick}>
+            Create account
+            {this.state.isClicked ? <Redirect to="/register" /> : null}
+          </a>
         </form>
       </div>
     );

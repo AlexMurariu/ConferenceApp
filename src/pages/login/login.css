@@ -1,0 +1,25 @@
+.login-div {
+  width: 30%;
+  height: 36%;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-width: 1px;
+  border-radius: 10px;
+  border-color: rgb(209, 209, 209);
+  border-style: solid;
+  padding: 10px;
+  overflow: auto;
+}
+
+.acc {
+  float: right;
+  margin-top: 5px;
+}
+.acc:hover {
+  text-decoration: none;
+}

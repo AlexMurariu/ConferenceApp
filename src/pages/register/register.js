@@ -41,7 +41,7 @@ export default class RegisterForm extends React.Component {
 
   render() {
     if (this.props.status) {
-      return <Redirect to="/" />;
+      return <Redirect to="/home" />;
     }
     return (
       <div className="register-div">
