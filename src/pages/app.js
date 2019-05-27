@@ -31,6 +31,11 @@ class App extends React.Component {
     return (
       <div>
         <div>
+            <Navbar
+                email={this.state.email}
+                password={this.state.password}
+                status={this.state.status}
+            />
           <Switch>
             <Route
               exact
@@ -64,11 +69,6 @@ class App extends React.Component {
             />
             <Route path="/home" component={Home} />
           </Switch>
-          <Navbar
-            email={this.state.email}
-            password={this.state.password}
-            status={this.state.status}
-          />
         </div>
       </div>
     );

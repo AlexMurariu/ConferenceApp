@@ -1,8 +1,15 @@
 import React from "react";
+import Conference from "../../components/conference/conference";
 
 class Home extends React.Component {
   render() {
-    return null
+    return (
+        <div>
+          <Conference/>
+          <Conference/>
+          <Conference/>
+        </div>
+    );
   }
 }
 

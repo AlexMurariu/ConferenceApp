@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "./navbar.css";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class Navbar extends React.Component {
   }
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light stick">
         <NavLink className="navbar-brand" exact to="/home">
           ConfyGo
         </NavLink>
