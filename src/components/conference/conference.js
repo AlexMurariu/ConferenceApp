@@ -1,13 +1,12 @@
 import React from "react";
-import "./conference.css";
 
 class Conference extends React.Component {
     render() {
         return (
-            <div className="card myClass">
-                <h5 className="card-header">Event Name</h5>
+            <div className={this.props.className}>
+                <h5 className="card-header">{this.props.eventName}</h5>
                 <div className="card-body">
-                    <p className="card-text">dd/mm/yyyy</p>
+                    <p className="card-text">{this.props.date}</p>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">Itinerary item 1</li>
                         <li className="list-group-item">Itinerary item 2</li>

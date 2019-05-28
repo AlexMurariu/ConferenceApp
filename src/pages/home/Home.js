@@ -37,9 +37,9 @@ class Home extends React.Component {
           </div>
         ) : null}
         <div className="conference-div">
-          <Conference />
-          <Conference />
-          <Conference />
+          <Conference className="card myClass" eventName="Event name" date="31/5/2019"/>
+          <Conference className="card myClass" eventName="Event name" date="31/5/2019"/>
+          <Conference className="card myClass" eventName="Event name" date="31/5/2019"/>
         </div>
       </div>
     );

@@ -1,0 +1,28 @@
+.conf-div {
+  position: relative;
+  top: 100px;
+}
+
+.inputs {
+  position: relative;
+  display: flex;
+  left: 350px;
+  width: 49%;
+  margin-bottom: 10px;
+}
+
+.sep-input {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.conf-card {
+  position: relative;
+  left: 350px;
+  width: 50%;
+}
+
+.btn-event {
+    margin-left: 5px;
+    width: 100%;
+}
