@@ -6,10 +6,11 @@ import { Switch, Route } from "react-router-dom";
 import Navbar from "../components/navbar/navbar";
 import AssignRoomsPage from "./assign-rooms/assignRooms";
 import BidPage from "./bid-page/bidPage";
-import ReviewPage from "./review-page/reviewPage"
-import UploadAbstractPage from "./upload-abstract/uploadAbstract"
-import UploadPaperPage from "./upload-paper/uploadPaper"
-import CreateEventPage from "./create-event/createEvent"
+import ReviewPage from "./review-page/reviewPage";
+import UploadAbstractPage from "./upload-abstract/uploadAbstract";
+import UploadPaperPage from "./upload-paper/uploadPaper";
+import CreateEventPage from "./create-event/createEvent";
+import AssignReviewerPage from "./assign-reviewer/assignReviewer"
 
 class App extends React.Component {
   constructor(props) {
@@ -184,6 +185,23 @@ class App extends React.Component {
           )}
         />
       );
+    } else if (path === "/assign-reviewer") {
+      return (
+        <Route
+          path={path}
+          render={props => (
+            <AssignReviewerPage
+              {...props}
+              email={this.state.email}
+              password={this.state.password}
+              status={this.state.status}
+              onChange={(email, pass, status) =>
+                this.changeState(email, pass, status)
+              }
+            />
+          )}
+        />
+      );
     }
   }
 
@@ -212,6 +230,7 @@ class App extends React.Component {
             {this.renderRoute("/upload_abstract")}
             {this.renderRoute("/upload_paper")}
             {this.renderRoute("/create_event")}
+            {this.renderRoute("/assign_reviewer")}
           </Switch>
         </div>
       </div>
