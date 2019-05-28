@@ -11,8 +11,7 @@ export default class BidPage extends React.Component {
     }
     return (
       <div>
-        EVENT EVENT EVENT EVENT EVENT EVENT EVENT EVENT EVENT EVENT EVENT EVENT
-        EVENT EVENT EVENT EVENT EVENT EVENT EVENT EVENT
+          
       </div>
     );
   }

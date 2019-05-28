@@ -1,0 +1,31 @@
+.select-div1 {
+  position: relative;
+  left: 400px;
+  display: flex;
+  width: 35%;
+}
+
+.slct {
+  margin: 10px;
+}
+
+.sub-btn {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    width: 150px;
+    height: 38px;
+}
+
+.review-div {
+  position: relative;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.paper-card {
+  width: 50%;
+  position: relative;
+  left: 300px;
+}

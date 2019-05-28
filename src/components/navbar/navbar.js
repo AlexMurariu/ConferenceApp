@@ -3,9 +3,6 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 
 class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light stick">
