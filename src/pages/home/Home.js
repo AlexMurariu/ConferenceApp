@@ -1,12 +1,21 @@
 import React from "react";
 import Conference from "../../components/conference/conference";
-import Button from "../../components/buttons/genericButton";
 import "./home.css";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  renderNavLink(path, text) {
+    return (
+      <NavLink className="btn btn-primary generic-button" to={path}>
+        {text}
+      </NavLink>
+    );
+  }
+
   render() {
     if (this.props.status === "") {
       return <Redirect to="/login" />;
@@ -15,32 +24,16 @@ class Home extends React.Component {
       <div className="content-allign">
         {!(this.props.status === "LISTENER") ? (
           <div className="button-div">
-            {this.props.status === "CHAIR" ||
-            this.props.status === "CO-CHAIR" ? (
-              <Button
-                className="btn btn-primary generic-button"
-                text="Assign Rooms"
-              />
-            ) : null}
-            <Button className="btn btn-primary generic-button" text="Bid" />
-            <Button
-              className="btn btn-primary generic-button"
-              text="Review Paper"
-            />
-            <Button
-              className="btn btn-primary generic-button"
-              text="Upload Abstract"
-            />
-            <Button
-              className="btn btn-primary generic-button"
-              text="Upload Paper"
-            />
-            {this.props.status === "CHAIR" ? (
-              <Button
-                className="btn btn-primary generic-button"
-                text="Create Event"
-              />
-            ) : null}
+            {this.props.status === "CHAIR" || this.props.status === "CO-CHAIR"
+              ? this.renderNavLink("/assign_rooms", "Assign rooms")
+              : null}
+            {this.renderNavLink("/bid", "Bid")}
+            {this.renderNavLink("/review_paper", "Review paper")}
+            {this.renderNavLink("/upload_abstract", "Upload abstract")}
+            {this.renderNavLink("/upload_paper", "Upload paper")}
+            {this.props.status === "CHAIR"
+              ? this.renderNavLink("/create_event", "Create event")
+              : null}
           </div>
         ) : null}
         <div className="conference-div">
