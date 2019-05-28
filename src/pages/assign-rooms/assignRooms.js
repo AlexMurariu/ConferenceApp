@@ -28,14 +28,14 @@ export default class AssignRoomsPage extends React.Component {
       return null;
     }
     return (
-      <div class="card room-assig">
-        <h5 class="card-header">{this.state.conf}</h5>
-        <div class="card-body">
-          <h5 class="card-title">{this.state.room}</h5>
-          <p class="card-text">{this.state.speaker}</p>
-          <a href="#" class="btn btn-primary">
+      <div className="card room-assig">
+        <h5 className="card-header">{this.state.conf}</h5>
+        <div className="card-body">
+          <h5 className="card-title">{this.state.room}</h5>
+          <p className="card-text">{this.state.speaker}</p>
+          <button className="btn btn-primary">
             Assign
-          </a>
+          </button>
         </div>
       </div>
     );
