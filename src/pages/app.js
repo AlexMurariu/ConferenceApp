@@ -185,7 +185,7 @@ class App extends React.Component {
           )}
         />
       );
-    } else if (path === "/assign-reviewer") {
+    } else if (path === "/assign_reviewer") {
       return (
         <Route
           path={path}
