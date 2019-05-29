@@ -6,7 +6,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light stick">
-        <NavLink className="navbar-brand" exact to="/home">
+        <NavLink className="navbar-brand" exact to="/">
           ConfyGo
         </NavLink>
         <button
