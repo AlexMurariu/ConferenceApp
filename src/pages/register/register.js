@@ -8,6 +8,7 @@ export default class RegisterForm extends React.Component {
     super(props);
 
     this.state = {
+      id: this.props.id,
       email: this.props.email,
       password: this.props.password,
       status: this.props.status
@@ -32,6 +33,7 @@ export default class RegisterForm extends React.Component {
       })
       .then(() =>
         this.props.onChange(
+          this.state.id,
           this.state.email,
           this.state.password,
           this.state.status

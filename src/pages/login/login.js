@@ -8,6 +8,7 @@ export default class LogInForm extends React.Component {
     super(props);
 
     this.state = {
+      id: this.props.id,
       email: this.props.email,
       password: this.props.password,
       status: this.props.status,
@@ -37,6 +38,7 @@ export default class LogInForm extends React.Component {
       .get(url)
       .then(res =>
         this.props.onChange(
+          res.data.id,
           res.data.email,
           res.data.password,
           res.data.user_status

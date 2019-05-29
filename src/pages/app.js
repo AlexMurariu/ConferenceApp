@@ -10,21 +10,30 @@ import ReviewPage from "./review-page/reviewPage";
 import UploadAbstractPage from "./upload-abstract/uploadAbstract";
 import UploadPaperPage from "./upload-paper/uploadPaper";
 import CreateEventPage from "./create-event/createEvent";
-import AssignReviewerPage from "./assign-reviewer/assignReviewer"
+import AssignReviewerPage from "./assign-reviewer/assignReviewer";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       email: "",
       password: "",
-      status: "CHAIR"
+      status: "CHAIR",
+      confsList: []
     };
     this.changeState = this.changeState.bind(this);
   }
 
-  changeState(email, pass, status) {
+  fetchConfs(confs){
     this.setState({
+      confsList: [...this.state.confsList, ...confs]
+    })
+  }
+
+  changeState(id, email, pass, status) {
+    this.setState({
+      id: id,
       email: email,
       password: pass,
       status: status
@@ -39,11 +48,12 @@ class App extends React.Component {
           render={props => (
             <LogInForm
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -56,11 +66,12 @@ class App extends React.Component {
           render={props => (
             <Register
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -73,11 +84,13 @@ class App extends React.Component {
           render={props => (
             <Home
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              fetchData={confs => this.fetchConfs(confs)}
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -90,11 +103,12 @@ class App extends React.Component {
           render={props => (
             <AssignRoomsPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -107,11 +121,12 @@ class App extends React.Component {
           render={props => (
             <BidPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -124,11 +139,12 @@ class App extends React.Component {
           render={props => (
             <ReviewPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -141,11 +157,12 @@ class App extends React.Component {
           render={props => (
             <UploadAbstractPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -158,11 +175,12 @@ class App extends React.Component {
           render={props => (
             <UploadPaperPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -175,11 +193,12 @@ class App extends React.Component {
           render={props => (
             <CreateEventPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -192,11 +211,12 @@ class App extends React.Component {
           render={props => (
             <AssignReviewerPage
               {...props}
+              id={this.state.email}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              onChange={(email, pass, status) =>
-                this.changeState(email, pass, status)
+              onChange={(id, email, pass, status) =>
+                this.changeState(id, email, pass, status)
               }
             />
           )}
@@ -206,9 +226,11 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("App: " + this.state.id);
     console.log("App: " + this.state.email);
     console.log("App: " + this.state.password);
     console.log("App: " + this.state.status);
+    console.log(this.state.confsList);
     return (
       <div>
         <div>
