@@ -7,7 +7,8 @@ export default class UploadAbstractPage extends React.Component {
     this.state = {
       driveURL: "",
       subject: "",
-      paperName: ""
+      paperName: "",
+      conf: ""
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -24,10 +25,24 @@ export default class UploadAbstractPage extends React.Component {
     return (
       <div className="abstract-content">
         <div className="abstract-input">
+        <select
+            value={this.state.conf}
+            onChange={this.onChange}
+            className="form-control input-pname"
+            name="conf"
+          >
+            <option value="" disabled>
+              Choose conference
+            </option>
+            <option value="Conference 1">Conference 1</option>
+            <option value="Conference 2">Conference 2</option>
+            <option value="Conference 3">Conference 3</option>
+            <option value="Conference 4">Conference 4</option>
+          </select>
           <input
             value={this.state.driveURL}
             onChange={this.onChange}
-            className="form-control"
+            className="form-control input-pname"
             name="driveURL"
             placeholder="Google Drive URL"
           />
