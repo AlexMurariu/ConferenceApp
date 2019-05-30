@@ -83,6 +83,7 @@ export default class RegisterForm extends React.Component {
               </option>
               <option value="LISTENER">Listener</option>
               <option value="AUTHOR">Author</option>
+              <option value="REVIEWER">Reviewer</option>
               <option value="CO-CHAIR">Co-Chair</option>
               <option value="CHAIR">Chair</option>
             </select>

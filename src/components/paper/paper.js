@@ -6,25 +6,13 @@ export default class Paper extends React.Component {
     return (
       <div className={this.props.className}>
         <div className="card-header paper-header">
-          {this.props.author} - 
-          <div className="date-style">dd/mm/yyyy</div>
+          <p>{this.props.paperName} by {this.props.author}.</p> 
+          <p>Subject {this.props.paperSubject}</p>
         </div>
         <div className="card-body">
-          <blockquote className="blockquote mb-0">
-            <p>
-              What is Lorem Ipsum? Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Integer posuere erat a ante.What is Lorem Ipsum?
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </p>
+          <blockquote className="blockquote mb-0 paper-header">
+            {this.props.abstractUrl ? <a href={this.props.abstractUrl} target="_blank">Abstract paper</a>  : null}
+            {this.props.paperUrl ? <a href={this.props.paperUrl} target="_blank">Full paper</a> : null}
           </blockquote>
         </div>
       </div>

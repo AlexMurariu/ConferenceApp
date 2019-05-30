@@ -2,7 +2,6 @@ import React from "react";
 import Conference from "../../components/conference/conference";
 import "./home.css";
 import { Redirect, NavLink } from "react-router-dom";
-import axios from "axios";
 
 class Home extends React.Component {
   renderNavLink(path, text) {
@@ -53,8 +52,14 @@ class Home extends React.Component {
                 ? this.renderNavLink("/assign_rooms", "Assign rooms")
                 : null}
               {this.renderNavLink("/bid", "Bid")}
-              {this.renderNavLink("/assign_reviewer", "Assign reviewer")}
-              {this.renderNavLink("/review_paper", "Review paper")}
+              {this.props.status === "CHAIR" || this.props.status === "CO-CHAIR"
+                ? this.renderNavLink("/assign_reviewer", "Assign reviewer")
+                : null}
+              {this.props.status === "REVIEWER" ||
+              this.props.status === "CO-CHAIR" ||
+              this.props.status === "CHAIR"
+                ? this.renderNavLink("/review_paper", "Review paper")
+                : null}
               {this.renderNavLink("/upload_abstract", "Upload abstract")}
               {this.renderNavLink("/upload_paper", "Upload paper")}
               {this.props.status === "CHAIR"

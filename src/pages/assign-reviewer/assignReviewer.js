@@ -1,14 +1,75 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import "./assignReviewer.css";
+import axios from "axios";
 export default class AssignReviewerPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      reviewers: [],
       reviewer: "",
-      paper: ""
+      papers: [],
+      paper: "",
     };
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:8080/users/reviewers").then(res =>
+      this.setState({
+        reviewers: res.data
+      })
+    );
+    axios.get("http://localhost:8080/papers").then(res =>
+      this.setState({
+        papers: res.data
+      })
+    );
+  }
+
+  makeName(email) {
+    const name = email.split("@");
+    return name[0];
+  }
+
+  renderOptions(type, item) {
+    if (type === "rev") {
+      const name = this.makeName(item.email);
+      return (
+        <option key={item.id} value={item.id}>
+          {name}
+        </option>
+      );
+    } else {
+      return (
+        <option key={item.id} value={item.id}>
+          {item.paper_name}
+        </option>
+      );
+    }
+  }
+
+  displayItems(type, list) {
+    let items = [];
+    for (let i = 0; i < list.length; i++) {
+      items.push(this.renderOptions(type, list[i]));
+    }
+    return items;
+  }
+
+  invalidAssignment() {
+    for (let i = 0; i < this.state.papers.length; i++) {
+      if (this.state.papers[i].id === this.state.paper) {
+        if (this.state.papers[i].authors_id === this.state.reviewer)
+          return (
+            <div class="alert alert-danger" role="alert">
+              The reviewer is the same as the paper's author!.
+            </div>
+          );
+      }
+    }
+    return null;
   }
 
   onChange(e) {
@@ -17,12 +78,25 @@ export default class AssignReviewerPage extends React.Component {
     });
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    for(let i = 0; i < this.state.papers.length; i++){
+      if(this.state.papers[i].review_results.length === 4){
+        return null;
+      }
+    }
+    axios.put("http://localhost:8080/papers/assign-reviewer", {
+      author_id: this.state.reviewer,
+      paper_id: this.state.paper
+    });
+  }
+
   render() {
     if (!this.props.status) {
       return <Redirect to="/login" />;
     }
     return (
-      <div className="assign-content">
+      <form className="assign-content" onSubmit={this.onSubmit}>
         <div className="assign-reviewer">
           <select
             value={this.state.reviewer}
@@ -33,10 +107,7 @@ export default class AssignReviewerPage extends React.Component {
             <option value="" disabled>
               Choose reviewer
             </option>
-            <option value="Reviewer 1">Reviewer 1</option>
-            <option value="Reviewer 2">Reviewer 2</option>
-            <option value="Reviewer 3">Reviewer 3</option>
-            <option value="Reviewer 4">Reviewer 4</option>
+            {this.displayItems("rev", this.state.reviewers)}
           </select>
           <select
             value={this.state.paper}
@@ -47,14 +118,14 @@ export default class AssignReviewerPage extends React.Component {
             <option value="" disabled>
               Choose paper
             </option>
-            <option value="Paper 1">Paper 1</option>
-            <option value="Paper 2">Paper 2</option>
-            <option value="Paper 3">Paper 3</option>
-            <option value="Paper 4">Paper 4</option>
+            {this.displayItems("paper", this.state.papers)}
           </select>
-          <button className="btn btn-primary select-margins">Assign</button>
+          {this.invalidAssignment()}
+          <button type="submit" className="btn btn-primary select-margins">
+            Assign
+          </button>
         </div>
-      </div>
+      </form>
     );
   }
 }

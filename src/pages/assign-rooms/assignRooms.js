@@ -6,6 +6,7 @@ export default class AssignRoomsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      confList: "",
       conf: "",
       room: "",
       speaker: ""
@@ -71,10 +72,18 @@ export default class AssignRoomsPage extends React.Component {
             <option value="" disabled>
               Choose room
             </option>
-            <option value="Room 1">Room 1</option>
-            <option value="Room 2">Room 2</option>
-            <option value="Room 3">Room 3</option>
-            <option value="Room 4">Room 4</option>
+            <option value="100">Room 100</option>
+            <option value="101">Room 101</option>
+            <option value="102">Room 102</option>
+            <option value="103">Room 103</option>
+            <option value="104">Room 104</option>
+            <option value="105">Room 105</option>
+            <option value="200">Room 200</option>
+            <option value="201">Room 201</option>
+            <option value="202">Room 202</option>
+            <option value="203">Room 203</option>
+            <option value="204">Room 204</option>
+            <option value="205">Room 205</option>
           </select>
           <select
             value={this.state.speaker}
