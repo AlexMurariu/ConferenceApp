@@ -11,7 +11,7 @@ import UploadAbstractPage from "./upload-abstract/uploadAbstract";
 import UploadPaperPage from "./upload-paper/uploadPaper";
 import CreateEventPage from "./create-event/createEvent";
 import AssignReviewerPage from "./assign-reviewer/assignReviewer";
-
+import axios from "axios";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -25,10 +25,12 @@ class App extends React.Component {
     this.changeState = this.changeState.bind(this);
   }
 
-  fetchConfs(confs){
-    this.setState({
-      confsList: [...this.state.confsList, ...confs]
-    })
+  componentDidMount() {
+    axios.get("http://localhost:8080//conferences/get").then(res => {
+      this.setState({
+        confsList: res.data
+      });
+    });
   }
 
   changeState(id, email, pass, status) {
@@ -48,7 +50,7 @@ class App extends React.Component {
           render={props => (
             <LogInForm
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -66,7 +68,7 @@ class App extends React.Component {
           render={props => (
             <Register
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -84,11 +86,11 @@ class App extends React.Component {
           render={props => (
             <Home
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
-              fetchData={confs => this.fetchConfs(confs)}
+              confs={this.state.confsList}
               onChange={(id, email, pass, status) =>
                 this.changeState(id, email, pass, status)
               }
@@ -103,7 +105,7 @@ class App extends React.Component {
           render={props => (
             <AssignRoomsPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -121,7 +123,7 @@ class App extends React.Component {
           render={props => (
             <BidPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -139,7 +141,7 @@ class App extends React.Component {
           render={props => (
             <ReviewPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -157,10 +159,11 @@ class App extends React.Component {
           render={props => (
             <UploadAbstractPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
+              confs={this.state.confsList}
               onChange={(id, email, pass, status) =>
                 this.changeState(id, email, pass, status)
               }
@@ -175,10 +178,11 @@ class App extends React.Component {
           render={props => (
             <UploadPaperPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
+              confs={this.state.confsList}
               onChange={(id, email, pass, status) =>
                 this.changeState(id, email, pass, status)
               }
@@ -193,7 +197,7 @@ class App extends React.Component {
           render={props => (
             <CreateEventPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -211,7 +215,7 @@ class App extends React.Component {
           render={props => (
             <AssignReviewerPage
               {...props}
-              id={this.state.email}
+              id={this.state.id}
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
@@ -235,11 +239,12 @@ class App extends React.Component {
       <div>
         <div>
           <Navbar
+            id={this.state.id}
             email={this.state.email}
             password={this.state.password}
             status={this.state.status}
-            logout={(email, pass, status) =>
-              this.changeState(email, pass, status)
+            logout={(id, email, pass, status) =>
+              this.changeState(id, email, pass, status)
             }
           />
           <Switch>

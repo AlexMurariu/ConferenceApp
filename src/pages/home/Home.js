@@ -5,22 +5,6 @@ import { Redirect, NavLink } from "react-router-dom";
 import axios from "axios";
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      confs: []
-    };
-  }
-
-  componentDidMount() {
-    axios.get("http://localhost:8080//conferences/get").then(res => {
-      this.props.fetchData(res.data);
-      this.setState({
-        confs: res.data
-      });
-    });
-  }
-
   renderNavLink(path, text) {
     return (
       <NavLink className="btn btn-primary generic-button" to={path}>
@@ -41,6 +25,7 @@ class Home extends React.Component {
         key={conf.id}
         className="card myClass"
         eventName={conf.event_name}
+        deadline={conf.app_deadline}
         date={eventDate}
         presentations={conf.itinerary}
       />
@@ -49,8 +34,8 @@ class Home extends React.Component {
 
   displayItems() {
     let items = [];
-    for (let i = 0; i < this.state.confs.length; i++) {
-      items.push(this.renderConference(this.state.confs[i]));
+    for (let i = 0; i < this.props.confs.length; i++) {
+      items.push(this.renderConference(this.props.confs[i]));
     }
     return items;
   }

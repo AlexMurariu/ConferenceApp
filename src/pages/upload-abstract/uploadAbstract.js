@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import "./uploadAbstract.css";
+import axios from "axios";
 export default class UploadAbstractPage extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,23 @@ export default class UploadAbstractPage extends React.Component {
       conf: ""
     };
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  renderOptions(conf) {
+    return (
+      <option key={conf.id} value={conf.id}>
+        {conf.event_name}
+      </option>
+    );
+  }
+
+  displayItems() {
+    let items = [];
+    for (let i = 0; i < this.props.confs.length; i++) {
+      items.push(this.renderOptions(this.props.confs[i]));
+    }
+    return items;
   }
 
   onChange(e) {
@@ -18,14 +36,27 @@ export default class UploadAbstractPage extends React.Component {
       [e.target.name]: e.target.value
     });
   }
+
+  onSubmit(e) {
+    e.preventDefault();
+    axios.post("http://localhost:8080/papers/post-abstract", {
+      authors_id: this.props.id,
+      conference_id: this.state.conf,
+      abstract_url: this.state.driveURL,
+      paper_name: this.state.paperName,
+      paperSubject: this.state.subject
+    })
+  }
+
   render() {
     if (!this.props.status) {
       return <Redirect to="/login" />;
     }
+    console.log(this.state.conf);
     return (
-      <div className="abstract-content">
+      <form className="abstract-content" onSubmit={this.onSubmit}>
         <div className="abstract-input">
-        <select
+          <select
             value={this.state.conf}
             onChange={this.onChange}
             className="form-control input-pname"
@@ -34,10 +65,7 @@ export default class UploadAbstractPage extends React.Component {
             <option value="" disabled>
               Choose conference
             </option>
-            <option value="Conference 1">Conference 1</option>
-            <option value="Conference 2">Conference 2</option>
-            <option value="Conference 3">Conference 3</option>
-            <option value="Conference 4">Conference 4</option>
+            {this.displayItems()}
           </select>
           <input
             value={this.state.driveURL}
@@ -69,9 +97,9 @@ export default class UploadAbstractPage extends React.Component {
             name="paperName"
             placeholder="Paper name"
           />
-          <button className="btn btn-primary input-pname">Upload</button>
+          <button type="submit" className="btn btn-primary input-pname">Upload</button>
         </div>
-      </div>
+      </form>
     );
   }
 }
