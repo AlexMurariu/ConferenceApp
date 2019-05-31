@@ -19,7 +19,7 @@ class App extends React.Component {
       id: "",
       email: "",
       password: "",
-      status: "CHAIR",
+      status: "",
       confsList: [],
       selectedPapers: []
     };
