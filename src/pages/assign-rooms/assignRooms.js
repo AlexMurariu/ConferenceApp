@@ -1,17 +1,72 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import "./assignRooms.css";
+import axios from "axios";
 
 export default class AssignRoomsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      confList: "",
+      users: [],
+      selectedPapers: [],
       conf: "",
       room: "",
-      speaker: ""
+      paper: "",
+      startHour: "",
+      endHour: ""
     };
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:8080/users").then(res =>
+      this.setState({
+        users: res.data
+      })
+    );
+  }
+
+  makeName(item) {
+    const name = item.split("@");
+    return name[0];
+  }
+
+  renderOptions(type, item) {
+    if (type === "speaker") {
+      return (
+        <option key={item.id} value={item.id}>
+          {item.paper_name}
+        </option>
+      );
+    } else {
+      return (
+        <option key={item.id} value={item.id}>
+          {item.event_name}
+        </option>
+      );
+    }
+  }
+
+  displayItems(type, list) {
+    if (type === "speaker") {
+      let newList = [];
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].conference_id === this.state.conf) {
+          newList.push(list[i]);
+        }
+      }
+      let items = [];
+      for (let i = 0; i < newList.length; i++) {
+        items.push(this.renderOptions(type, newList[i]));
+      }
+      return items;
+    }
+    let items = [];
+    for (let i = 0; i < list.length; i++) {
+      items.push(this.renderOptions(type, list[i]));
+    }
+    return items;
   }
 
   onChange(e) {
@@ -20,21 +75,68 @@ export default class AssignRoomsPage extends React.Component {
     });
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    let paper = "";
+    let speakerID = "";
+    for (let i = 0; i < this.props.selected.length; i++) {
+      if (this.props.selected[i].id === this.state.paper) {
+        paper = this.props.selected[i].paper_name;
+        speakerID = this.props.selected[i].authors_id;
+      }
+    }
+    axios.put("http://localhost:8080/conferences/addEvent", {
+      conference_id: this.state.conf,
+      room: this.state.room,
+      name: paper,
+      speaker: speakerID,
+      start_hour: this.state.startHour,
+      end_hour: this.state.endHour
+    });
+  }
+
   renderCard() {
     if (
       this.state.conf === "" ||
       this.state.room === "" ||
-      this.state.speaker === ""
+      this.state.paper === "" ||
+      this.state.startHour === "" ||
+      this.state.endHour === ""
     ) {
       return null;
     }
+
+    let event = "";
+    for (let i = 0; i < this.props.confs.length; i++) {
+      if (this.state.conf === this.props.confs[i].id) {
+        event = this.props.confs[i].event_name;
+      }
+    }
+
+    let speakerID = "";
+    for (let i = 0; i < this.props.selected.length; i++) {
+      if (this.state.paper === this.props.selected[i].id) {
+        speakerID = this.props.selected[i].authors_id;
+      }
+    }
+
+    let speaker = "";
+    for (let i = 0; i < this.state.users.length; i++) {
+      if (speakerID === this.state.users[i].id) {
+        speaker = this.state.users[i].email.split("@")[0];
+      }
+    }
+
     return (
-      <div className="card room-assig">
-        <h5 className="card-header">{this.state.conf}</h5>
+      <div className="card room-assig elem">
+        <h5 className="card-header">{event}</h5>
         <div className="card-body">
-          <h5 className="card-title">{this.state.room}</h5>
-          <p className="card-text">{this.state.speaker}</p>
-          <button className="btn btn-primary">
+          <h5 className="card-title">Speaker {speaker}</h5>
+          <p className="card-text">
+            Room {this.state.room} from {this.state.startHour} to{" "}
+            {this.state.endHour}
+          </p>
+          <button type="submit" className="btn btn-primary">
             Assign
           </button>
         </div>
@@ -47,26 +149,23 @@ export default class AssignRoomsPage extends React.Component {
       return <Redirect to="/login" />;
     }
     return (
-      <div>
+      <form onSubmit={this.onSubmit}>
         <div className="select-div">
           <select
             value={this.state.conf}
             onChange={this.onChange}
-            className="form-control conf-select"
+            className="form-control elem"
             name="conf"
           >
             <option value="" disabled>
               Choose conference
             </option>
-            <option value="Conference 1">Conference 1</option>
-            <option value="Conference 2">Conference 2</option>
-            <option value="Conference 3">Conference 3</option>
-            <option value="Conference 4">Conference 4</option>
+            {this.displayItems("conf", this.props.confs)}
           </select>
           <select
             value={this.state.room}
             onChange={this.onChange}
-            className="form-control room-select"
+            className="form-control elem"
             name="room"
           >
             <option value="" disabled>
@@ -86,22 +185,35 @@ export default class AssignRoomsPage extends React.Component {
             <option value="205">Room 205</option>
           </select>
           <select
-            value={this.state.speaker}
+            value={this.state.paper}
             onChange={this.onChange}
-            className="form-control speaker-select"
-            name="speaker"
+            className="form-control elem"
+            name="paper"
           >
             <option value="" disabled>
-              Choose speaker
+              Choose paper
             </option>
-            <option value="Speaker 1">Speaker 1</option>
-            <option value="Speaker 2">Speaker 2</option>
-            <option value="Speaker 3">Speaker 3</option>
-            <option value="Speaker 4">Speaker 4</option>
+            {this.displayItems("speaker", this.props.selected)}
           </select>
+          <input
+            value={this.state.startHour}
+            onChange={this.onChange}
+            className="form-control elem"
+            name="startHour"
+            placeholder="From 00:00"
+            maxLength="5"
+          />
+          <input
+            value={this.state.endHour}
+            onChange={this.onChange}
+            className="form-control elem"
+            name="endHour"
+            placeholder="To 00:00"
+            maxLength="5"
+          />
         </div>
         {this.renderCard()}
-      </div>
+      </form>
     );
   }
 }

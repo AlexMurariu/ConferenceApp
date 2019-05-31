@@ -1,32 +1,17 @@
-.conf-select {
-  position: relative;
-  width: 20%;
-  top: 100px;
-  left: 50px;
-}
-
-.room-select {
-  position: relative;
-  width: 20%;
-  top: 62px;
-  left: 400px;
-}
-
-.speaker-select {
-  position: relative;
-  width: 20%;
-  top: 24px;
-  left: 750px;
-}
-
 .select-div {
     position: relative;
     left: 100px;
+    top: 100px;
+    width: 50%;
 }
 
 .room-assig {
   position: relative;
   width: 50%;
   top: 100px;
-  left: 300px;
+  left: 100px;
+}
+
+.elem {
+  margin-top: 10px;
 }

@@ -100,7 +100,6 @@ export default class ReviewPage extends React.Component {
     if (!this.props.status) {
       return <Redirect to="/login" />;
     }
-    console.log(this.state.score)
     return (
       <form className="review-div" onSubmit={this.onSubmit}>
         <div className="select-div1">

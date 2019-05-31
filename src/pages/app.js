@@ -20,15 +20,51 @@ class App extends React.Component {
       email: "",
       password: "",
       status: "CHAIR",
-      confsList: []
+      confsList: [],
+      selectedPapers: []
     };
     this.changeState = this.changeState.bind(this);
   }
 
+  decode(code) {
+    if (code === "STRONG_ACCEPT") {
+      return "6";
+    } else if (code === "ACCEPT") {
+      return "5";
+    } else if (code === "WEAK_ACCEPT") {
+      return "4";
+    } else if (code === "WEAK_REJECT") {
+      return "3";
+    } else if (code === "REJECT") {
+      return "2";
+    } else if (code === "STRONG REJECT") {
+      return "1";
+    }
+  }
+  
   componentDidMount() {
     axios.get("http://localhost:8080//conferences/get").then(res => {
       this.setState({
         confsList: res.data
+      });
+    });
+    axios.get("http://localhost:8080/papers").then(res => {
+      let list = [];
+      for (let i = 0; i < res.data.length; i++) {
+        const keys = Object.keys(res.data[i].review_results.firstReview);
+        let sum = 0;
+        for (let j = 0; j < keys.length; j++) {
+          let val = this.decode(
+            res.data[i].review_results.firstReview[keys[i]]
+          );
+          sum += val;
+        }
+        if (sum > (keys.length * 6) / 2 + 2) {
+          list.push(res.data[i]);
+        }
+      }
+      this.setState({
+        selectedPapers: list
       });
     });
   }
@@ -109,6 +145,8 @@ class App extends React.Component {
               email={this.state.email}
               password={this.state.password}
               status={this.state.status}
+              confs={this.state.confsList}
+              selected={this.state.selectedPapers}
               onChange={(id, email, pass, status) =>
                 this.changeState(id, email, pass, status)
               }
@@ -230,11 +268,12 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("App: " + this.state.id);
-    console.log("App: " + this.state.email);
-    console.log("App: " + this.state.password);
-    console.log("App: " + this.state.status);
-    console.log(this.state.confsList);
+    // console.log(this.state.selectedPapers);
+    // console.log("App: " + this.state.id);
+    // console.log("App: " + this.state.email);
+    // console.log("App: " + this.state.password);
+    // console.log("App: " + this.state.status);
+    // console.log(this.state.confsList);
     return (
       <div>
         <div>
